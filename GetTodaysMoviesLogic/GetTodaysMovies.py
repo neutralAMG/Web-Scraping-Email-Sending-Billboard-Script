@@ -1,18 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from Model.MoviesObjet import Movie
-from SenMessages.SendMessages import SendMessage
-from SenMessages.SendMessages import SendOneMessage
 import time
 
 
-#Add the timer like class to handle the scheduling of tasks
 
-#Add the background service 
-
-# Add the whatsapp sending message funcionality
-
-#Make the background service activate at 9:00 AM and send the massages 
 def GetTodaysMovies():
   
   driver = webdriver.Chrome()
@@ -24,7 +16,7 @@ def GetTodaysMovies():
   
   CurrentMovie = 1
   
-  SendOneMessage()
+  #SendOneMessage()
  
   for x in horarios:
       # Add Description by clicking on the ver mas link
@@ -34,17 +26,17 @@ def GetTodaysMovies():
       languaje = x.find_element(By.XPATH,f'//*[@id="horarios"]/div[{CurrentMovie}]/div/div/div[2]/h5/i').text
       genres = x.find_element(By.XPATH,f'//*[@id="horarios"]/div[{CurrentMovie}]/div/div/div[2]/div[1]/h5/span[1]').text
       rated = x.find_element(By.XPATH,f'//*[@id="horarios"]/div[{CurrentMovie}]/div/div/div[2]/div[1]/h5/span[2]').text
-      Hours = []
-      hours = x.find_elements(By.CLASS_NAME,f'myButton2')
+      hoursGetted = x.find_elements(By.CLASS_NAME,f'myButton21')
+      Hours = ""
+      for y in hoursGetted:
+        Hours += y.text + ", "
 
-      for y in hours:
-         Hours.append(y.text)
-         
       newMovie = Movie(imageUrl,title, languaje, genres, rated, Hours)
       time.sleep(1)
-      SendMessage(newMovie)
+     # SendMessage(newMovie)
       MoviesForToday.append(newMovie) 
       CurrentMovie+= 1    
+      #print(newMovie.Name)
   return MoviesForToday
 
 
